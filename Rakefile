@@ -1,64 +1,15 @@
 require 'rake'
-require 'rake/testtask'
-require 'rake/rdoctask'
-require 'rubygems'
 
-begin
-  require 'jeweler'
-  Jeweler::Tasks.new do |gem|
-    gem.name = "wndx-multiselect"
-    gem.summary = %Q{Builds multiple selection controls, using jQuery's autocomplete plugin with Rails 3.}
-    gem.description = %Q{Builds multiple selection controls, using jQuery's autocomplete plugin with Rails 3.}
-    gem.email = "lori@wndx.com"
-    gem.homepage = "http://github.com/wndxlori/wndx-multiselect"
-    gem.authors = ["Lori M Olson"]
-    gem.add_development_dependency "rails", ">= 2.1.0"
-    gem.add_dependency "rails3-jquery-autocomplete", ">= 0.5.0"
-    gem.files = %w(README.markdown Rakefile) + Dir.glob("{lib,test}/**/*")
+desc 'Default: Run all specs.'
+task :default => :all_specs
 
-  end
-  Jeweler::GemcutterTasks.new
-rescue LoadError
-  puts "Jeweler (or a dependency) not available. Install it with: gem install jeweler"
-end
-
-desc 'Default: run specs.'
-task :default => :spec
-
-desc 'Test the wndx_multiselect plugin.'
-Rake::TestTask.new(:test) do |t|
-  t.libs << 'lib'
-  t.libs << 'test'
-  t.pattern = 'test/**/*_test.rb'
-  t.verbose = true
-end
-
-begin
-  require 'rcov/rcovtask'
-  Rcov::RcovTask.new do |test|
-    test.libs << 'test'
-    test.pattern = 'test/**/test_*.rb'
-    test.verbose = true
-  end
-rescue LoadError
-  task :rcov do
-    abort "RCov is not available. In order to run rcov, you must: sudo gem install spicycode-rcov"
+desc "Run all specs"
+task :all_specs do
+  Dir['spec/**/Rakefile'].each do |rakefile|
+    directory_name = File.dirname(rakefile)
+    sh <<-CMD
+      cd #{directory_name} 
+      bundle exec rake
+    CMD
   end
 end
-
-desc 'Generate documentation for the wndx_multiselect plugin.'
-Rake::RDocTask.new(:rdoc) do |rdoc|
-  rdoc.rdoc_dir = 'rdoc'
-  rdoc.title    = 'WndxMultiselect'
-  rdoc.options << '--line-numbers' << '--inline-source'
-  rdoc.rdoc_files.include('README')
-  rdoc.rdoc_files.include('lib/**/*.rb')
-end
-
-require "rspec/core/rake_task"
-desc 'Test the WndxMultiselect Gem.'
-RSpec::Core::RakeTask.new(:spec) do |spec|
-  spec.pattern = 'spec/**/*_spec.rb'
-  spec.rspec_opts = ['--backtrace']
-end
-
