@@ -5,7 +5,7 @@ module ActionView
 
     module FormTagHelper
 
-      def multiselect_control_tag(name, values, value = nil, options ={})
+      def multiselect_tag(name, values, value = nil, options ={})
         generate_multiselect( name, value, values, nil, options )
       end
     
@@ -40,7 +40,8 @@ module ActionView
         button_tags << submit_tag( 'Add All', :name => 'match2selected', :class => 'all')
         button_tags << submit_tag( 'Remove', :name => 'selected2match')
         button_tags << submit_tag( 'Remove All', :name => 'selected2match', :class => 'all')
-        buttons = content_tag( :div, raw(button_tags.join(tag(:br))), :class => 'multiselectbuttons')
+        buttons = content_tag( :div, button_tags.join(tag(:br)), :class => 'multiselectbuttons')
+#        buttons = content_tag( :div, raw(button_tags.join(tag(:br))), :class => 'multiselectbuttons')
 
         selects = []
         selects << text_field_tag( 'match', match, options.merge(:class => 'multiselecttext', :placeholder => 'Enter match text')) unless source.nil?
@@ -49,7 +50,8 @@ module ActionView
         selects << buttons
         selects << hidden_field_tag( "#{name.to_s}_ids[]", nil, :class => 'multiselectids' )
 
-        content_tag(:div, raw(selects.join), updated_options.merge(:class => 'multiselect'))
+        content_tag(:div, selects.join, updated_options.merge(:class => 'multiselect'))
+#        content_tag(:div, raw(selects.join), updated_options.merge(:class => 'multiselect'))
       end
     end
   end
