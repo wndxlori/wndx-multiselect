@@ -5,6 +5,8 @@ Gem::Specification.new do |s|
   s.summary = "Multiselect control for Rails"
   s.authors = ["Lori M Olson"]
   s.email = ["lori@wndx.com"]
+  s.requirements << 'jQuery and jQuery UI Autocomplete'
+  s.homepage = 'https://github.com/wndxlori/wndx-multiselect'
   s.files = [
     "lib/wndx-multiselect.rb",
     "lib/generators/templates",

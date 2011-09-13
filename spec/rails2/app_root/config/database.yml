@@ -17,8 +17,3 @@ production:
   adapter: sqlite3
   database: db/production.sqlite3
   timeout: 5000
-  
-in_memory:
-  adapter: sqlite3
-  database: ":memory:"
-  verbosity: quiet
