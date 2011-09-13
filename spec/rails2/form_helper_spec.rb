@@ -1,9 +1,7 @@
 require 'spec_helper'
 require 'wndx-multiselect/form_helper'
 
-describe WndxMultiselect::FormTagHelper do
-  
-  include WndxMultiselect::FormTagHelper
+describe ActionView::Helpers::FormTagHelper do
   
   describe "multiselect_control_tag" do
     before(:each) do
