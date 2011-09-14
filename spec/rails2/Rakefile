@@ -1,8 +1,10 @@
 require 'rake'
 require 'spec/rake/spectask'
+require 'jasmine'
+load 'jasmine/tasks/jasmine.rake'
 
 desc 'Default: Run all specs for a specific rails version.'
-task :default => :spec
+task :default => [:spec, "jasmine:ci"]
 
 desc "Run all specs for a specific rails version"
 Spec::Rake::SpecTask.new() do |t|
