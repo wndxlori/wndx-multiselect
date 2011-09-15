@@ -29,7 +29,7 @@ src_files:
 #   - stylesheets/*.css
 #
 stylesheets:
-  - ../../lib/generators/templates/**/*.css
+  - wndx-multiselect.css
 
 # helpers
 #

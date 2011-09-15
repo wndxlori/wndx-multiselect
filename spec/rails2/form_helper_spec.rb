@@ -32,6 +32,10 @@ describe ActionView::Helpers::FormTagHelper, :type => :helper do
       @control = helper.multiselect_tag('field_name', [], '')
     end
 
+    after(:all) do
+      save_fixture(@control, 'multiselect_tag')
+    end
+
   end
 
   describe "autocomplete_multiselect_tag" do
@@ -44,6 +48,10 @@ describe ActionView::Helpers::FormTagHelper, :type => :helper do
 
     it "should have an autocomplete text field tag" do
       @control.should have_tag("input.multiselecttext[type=text]")
+    end
+
+    after(:all) do
+      save_fixture(@control, 'autocomplete_multiselect_tag')
     end
 
   end
