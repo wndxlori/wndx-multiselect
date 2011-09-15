@@ -29,7 +29,7 @@ describe ActionView::Helpers::FormTagHelper, :type => :helper do
     it_should_behave_like 'multiselect'
 
     before(:each) do
-      @control = helper.multiselect_tag('field_name', [], '')
+      @control = helper.multiselect_tag('field_name', options_for_select({:name1=>"1", :name2=>"2", :name3=>"3"}), '')
     end
 
     after(:all) do

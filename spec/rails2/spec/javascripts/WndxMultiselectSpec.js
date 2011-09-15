@@ -1,16 +1,21 @@
 describe("WNDX.Multiselect", function() {
 
+    var multiSelect;
+
     beforeEach(function() {
-        loadFixtures('multiselect.html');
+        loadFixtures('multiselect_tag.html');
+        multiSelect = new WNDX.Multiselect($('div.multiselect'));
     });
 
+
     it("should initialize itself", function() {
-        var multiselect = new WNDX.Multiselect($('#select_div')).initialize();
-//        $('#collapsed_box a').click();
-//        expect($(smartbox.load_link)).toHaveClass('Collapse');
     });
 
     it("should select one or more items", function() {
+    });
+
+
+    it("should remove selected items from the match list", function() {
 
     });
 
