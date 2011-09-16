@@ -1,13 +1,18 @@
 WndxMultiselect
 ==================
 
-Introduction goes here.
+At the moment, still stuck on getting Jasmine fixtures to load, so I can test the Javascript.
 
+You can clone this, and then go to spec/rails2 and run "bundle install" (if you are using RVM, I would recommend setting
+up a new gemset for this because it's targeting Rails 2.1 for backward compatibility
+
+After that is set up, you can go back up to the root directory and run "rake".  Or, from spec/rails2, you can run
+"bundle exec rake".
 
 Example
 =======
 
-Example goes here.
+When it's working, I'll add the examples
 
 
 Copyright (c) 2010-2011 The WNDX Group Inc., released under the MIT license
