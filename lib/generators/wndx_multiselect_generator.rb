@@ -1,7 +1,7 @@
 require 'rails/generators'
 
 class WndxMultiselectGenerator < Rails::Generators::Base
-  desc "Run this generator to enable PowerUX Multiselect in your Rails application"
+  desc "Run this generator to enable WNDX Multiselect in your Rails application"
 
   source_root File.join(File.dirname(__FILE__), 'templates')
   
@@ -16,7 +16,7 @@ class WndxMultiselectGenerator < Rails::Generators::Base
   #   puts "Installing"
   #   record do |m|
   #     m.file 'wndx-multiselect-rails.js',
-  #            'public/javascriptswndx-multiselect-rails.js',
+  #            'public/javascripts/wndx-multiselect-rails.js',
   #            :collision => :ask
   # 
   #     m.file 'wndx-multiselect.css',

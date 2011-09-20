@@ -12,7 +12,7 @@ describe "multiselect", :shared => true do
 
   ['Add', 'Add All', 'Remove', 'Remove All'].each do |button_value|
     it "should have an #{button_value} button" do
-      @control.should have_tag("input[type=submit][value=#{button_value}]")
+      @control.should have_tag("a", button_value)
     end
   end
 
