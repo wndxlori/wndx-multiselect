@@ -31,4 +31,16 @@
 .multiselectbuttons a.all[name=selected2match] {
 	background: url("../images/wndx/16/shadow/navigate_left2.png") center no-repeat;
 }
+.multiselectbuttons a.add:hover {
+	background: url("../images/wndx/16/plain/navigate_right.png") center no-repeat;
+}
+.multiselectbuttons a.all[name=match2selected]:hover {
+	background: url("../images/wndx/16/plain/navigate_right2.png") center no-repeat;
+}
+.multiselectbuttons a.remove:hover {
+	background: url("../images/wndx/16/plain/navigate_left.png") center no-repeat;
+}
+.multiselectbuttons a.all[name=selected2match]:hover {
+	background: url("../images/wndx/16/plain/navigate_left2.png") center no-repeat;
+}
 .multiselectbuttons a span { display:none }
