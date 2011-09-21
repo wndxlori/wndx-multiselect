@@ -12,6 +12,11 @@ describe("WNDX.Multiselect", function() {
         expect(multiSelect.holder).toEqual($('div.multiselect'));
     });
 
+    it("should initialize links", function() {
+        expect($('a.remove.disabled')).toExist();
+        expect($('a.all.disabled[name=selected2match]')).toExist();
+    });
+
     it("should select one or more items", function() {
         // get val of first option
         var opt_val = $('#field_name_match option:first').val();
