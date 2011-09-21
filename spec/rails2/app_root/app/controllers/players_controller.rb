@@ -92,5 +92,5 @@ class PlayersController < ApplicationController
   end
 
   autocomplete :team, :name
-  autocomplete :player, :given_name, :display_value => :full_name, :order => :sur_name, :extra_data => [:sur_name]
+  autocomplete :player, :given_name, :display_value => :full_name, :order => :sur_name, :extra_data => [:sur_name], :limit => 50
 end
