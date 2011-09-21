@@ -1,14 +1,7 @@
-<p id="notice"><%= notice %></p>
+<p id="notice"><%= flash[:notice] %></p>
 <h2>Player Select</h2>
-<div class="selectablelist">
-	<%= text_field_tag 'match', 'Enter match text', :class => 'selectabletext'  %>
-	<%= select_tag( :my_players, nil, :multiple => true, :size => 6, :class => 'selectablelistleft' ) %>
-	<%= select_tag( :my_selected_players, nil, :multiple => true, :size => 6, :class => 'selectablelistright' ) %>
-	<div class='selectablelistbuttons'>
-		<%= submit_tag 'Add', :name => 'left2right' %> <br />
-		<%= submit_tag 'Add All', :name => 'left2right', :class => 'all' %> <br />
-		<%= submit_tag 'Remove', :name => 'right2left' %> <br />
-		<%= submit_tag 'Remove All', :name => 'right2left', :class => 'all' %> 
-	</div>
-	<%= hidden_field_tag "selectable_list_ids[]", nil, :class => 'selectablelist_ids' %>
-</div>
+
+<% form_tag '/players/selected' do -%>
+    <%= autocomplete_multiselect_tag( :player, :full_name, '/players/autocomplete_player_given_name') %>
+    <%= submit_tag "Select Players" %>
+<% end -%>

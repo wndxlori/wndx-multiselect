@@ -14,6 +14,7 @@ class TeamsController < ApplicationController
     
     def selected
       @teams = Team.find(params['my_teams_ids'].first.split(','))
+      render :action => 'index'
     end
 
   # GET /teams

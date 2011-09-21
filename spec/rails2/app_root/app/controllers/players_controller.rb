@@ -4,6 +4,11 @@ class PlayersController < ApplicationController
   def select
   end
 
+  def selected
+    @players = Player.find(params['player_ids'].first.split(','))
+    render :action => 'index'
+  end
+
   # GET /players
   # GET /players.xml
   def index
@@ -86,6 +91,6 @@ class PlayersController < ApplicationController
     end
   end
 
-  auto_complete_for :team, :name
-  auto_complete_for :player, :given_name, :display_value => :full_name
+  autocomplete :team, :name
+  autocomplete :player, :given_name, :display_value => :full_name, :order => :sur_name, :extra_data => [:sur_name]
 end
