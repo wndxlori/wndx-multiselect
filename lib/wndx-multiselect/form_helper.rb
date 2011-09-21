@@ -46,8 +46,8 @@ module ActionView
         selects = []
         selects << text_field_tag( 'match', match, options.merge(:class => 'multiselecttext', :placeholder => 'Enter match text')) unless source.nil?
         selects << select_tag( name.to_s + "_match", values, select_match_options)
-        selects << select_tag( name.to_s + "_selected", nil, select_selected_options)
         selects << buttons
+        selects << select_tag( name.to_s + "_selected", nil, select_selected_options)
         selects << hidden_field_tag( "#{name.to_s}_ids[]", nil, :class => 'multiselectids' )
 
         content_tag(:div, selects.join, updated_options.merge(:class => 'multiselect'))
