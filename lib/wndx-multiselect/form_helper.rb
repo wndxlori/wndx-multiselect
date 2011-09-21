@@ -36,10 +36,10 @@ module ActionView
         select_selected_options = add_selected_options(updated_options)
 
         button_tags = []
-        button_tags << link_to_function( 'Add', {}, :name => 'match2selected', :class => 'add', :alt => 'Add')
-        button_tags << link_to_function( 'Add All', {}, :name => 'match2selected', :class => 'all', :alt => 'Add All')
-        button_tags << link_to_function( 'Remove', {}, :name => 'selected2match', :class => 'remove', :alt => 'Remove')
-        button_tags << link_to_function( 'Remove All', {}, :name => 'selected2match', :class => 'all', :alt => 'Remove All')
+        button_tags << link_to_function( content_tag(:span, 'Add'), {}, :name => 'match2selected', :class => 'add', :alt => 'Add')
+        button_tags << link_to_function( content_tag(:span, 'Add All'), {}, :name => 'match2selected', :class => 'all', :alt => 'Add All')
+        button_tags << link_to_function( content_tag(:span, 'Remove'), {}, :name => 'selected2match', :class => 'remove', :alt => 'Remove')
+        button_tags << link_to_function( content_tag(:span, 'Remove All'), {}, :name => 'selected2match', :class => 'all', :alt => 'Remove All')
         buttons = content_tag( :div, button_tags.join(tag(:br)), :class => 'multiselectbuttons')
 #        buttons = content_tag( :div, raw(button_tags.join(tag(:br))), :class => 'multiselectbuttons')
 
