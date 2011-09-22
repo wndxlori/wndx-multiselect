@@ -3,5 +3,6 @@
 
 <% form_tag '/teams/selected' do -%>
     <%= multiselect_tag('my_teams', options_from_collection_for_select(@teams, :id, :name)) %>
+    <div style="height: 100px"></div>
     <%= submit_tag "Select Teams" %>
 <% end -%>

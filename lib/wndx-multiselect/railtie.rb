@@ -12,6 +12,7 @@ module WndxMultiselect
         require 'wndx-multiselect/form_helper'
 #        ActionView::Helpers.send(:include, WndxMultiselect::FormHelper )
 #        ActionView::Helpers.send(:include, WndxMultiselect::FormTagHelper ) 
+        include WndxMultiselect::Support
         include WndxMultiselect::FormHelper
         include WndxMultiselect::FormTagHelper
       end

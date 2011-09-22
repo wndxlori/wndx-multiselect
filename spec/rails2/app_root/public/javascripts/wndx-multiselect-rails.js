@@ -43,6 +43,7 @@
                 this.disableLink(this.remove_link);
             }
         }
+        return this;
     };
 
     WNDX.Multiselect.prototype.enableLink = function(link) {
@@ -53,8 +54,27 @@
         $(link).addClass('disabled');
     };
 
-    WNDX.Multiselect.prototype.selectClick = function(link) {
-        var arr = $(link).attr("name").split("2");
+    // Ensure that no options are in both lists
+    WNDX.Multiselect.prototype.filter = function() {
+        var that = this;
+        $(that.selected_select).find('option').each( function() {
+            $(that.match_select).find("option[value='" + $(this).val() + "']").remove();
+        });
+        return this;
+    };
+
+    // Saves the id's of selected items in the hidden field
+    WNDX.Multiselect.prototype.saveSelected = function () {
+        var ids = new Array();
+        $(this.selected_select).find("option").each(function(){
+            ids.push($(this).val());
+        });
+        $(this.selected_ids).val(ids.join(','));
+        return this;
+    };
+
+    WNDX.Multiselect.prototype.selectClick = function(button) {
+        var arr = $(button).attr("name").split("2");
         var from = arr[0];
         var to = arr[1];
         var holder = $(this.holder);
@@ -62,7 +82,7 @@
 
         // Chooses selected options or all options
         var option_selector = ' option:selected';
-        if ( $(link).hasClass('all')) {
+        if ( $(button).hasClass('all')) {
             option_selector = ' option';
         }
 
@@ -78,14 +98,7 @@
             new_option.effect("highlight", {}, 3000);
         });
 
-        this.resetLinks();
-
-       // Saves the id's of selected items in the hidden field
-        var ids = new Array();
-        holder.find("select.multiselectselected option").each(function(){
-            ids.push($(this).val());
-        });
-        this.selected_ids.val(ids.join(','));
+        this.resetLinks().saveSelected();
 
         // to remove items not matching filter
         if (this.match_text != undefined) this.match_text.autocomplete("search");
@@ -122,7 +135,7 @@
 
         var that = this;
 
-        that.resetLinks();
+        that.resetLinks().saveSelected().filter();
 
         $(that.holder).find('select').bind('change', function() { that.resetLinks(); });
 

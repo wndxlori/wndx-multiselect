@@ -1,3 +1,2 @@
-Selected:
-<%= @teams.map(&:name) %>
-<br /><%= params.inspect %>
+<h1>Selected</h1>
+<%= multiselect(:team, :name, @teams.map(&:to_param) ) %>

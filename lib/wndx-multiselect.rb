@@ -10,3 +10,7 @@ require 'wndx-multiselect/form_helper'
 class ActionController::Base
   include ::Rails2jQueryAutoComplete
 end
+
+class ActionView::Base
+  include ::Rails2jQueryAutoComplete
+end
