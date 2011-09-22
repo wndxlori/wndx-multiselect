@@ -1,49 +1,83 @@
 require 'spec_helper'
 
-describe "multiselect", :shared => true do
+describe ActionView::Helpers::FormHelper, :type => :helper do
 
-  it "should have a match select box" do
-    @control.should have_tag('select.multiselectmatch')
+  class Matches
+    def self.table_name; 'match' end
+    def self.primary_key; 'id' end
   end
 
-  it "should have a selected select box" do
-    @control.should have_tag('select.multiselectselected')
+  before(:all) do
+    @items = [OpenStruct.new({:id => 1, :name => 'foobar'})]
   end
 
-  ['Add', 'Add All', 'Remove', 'Remove All'].each do |button_value|
-    it "should have an #{button_value} button" do
-      @control.should have_tag("a", button_value)
-    end
+  before(:each) do
+    Matches.stub!(:all).and_return(@items)
   end
 
-  it "should have hidden field tag" do
-    @control.should have_tag("input[type=hidden]")
-  end
+  describe "multiselect" do
 
-end
-
-describe ActionView::Helpers::FormTagHelper, :type => :helper do
-
-  describe "multiselect_tag" do
-
-    it_should_behave_like 'multiselect'
+    it_should_behave_like 'multiselect_core'
 
     before(:each) do
-      @control = helper.multiselect_tag('field_name', options_for_select({:name1=>"1", :name2=>"2", :name3=>"3"}), '')
+      @control = helper.multiselect(:matches, :name, [])
+    end
+
+
+    describe "options_for_multiselect_match" do
+
+      it "should find all items if no match text provided" do
+        Matches.should_receive(:all).
+            with({:conditions=>["LOWER(match.name) LIKE ?", "%"], :select=>"match.id, match.name", :order=>"match.name ASC", :limit=>10}).
+            and_return(@items)
+        @matches = helper.options_for_multiselect_match(:matches, :name)
+      end
+
+      it "should find the limit specified number of items" do
+        Matches.should_receive(:all).
+            with({:conditions=>["LOWER(match.name) LIKE ?", "foo%"], :select=>"match.id, match.name", :order=>"match.name ASC", :limit=>20}).
+            and_return(@items)
+        @matches = helper.options_for_multiselect_match(:matches, :name, "foo", :limit => 20)
+      end
+
+      it "should find items in the order specified" do
+        Matches.should_receive(:all).
+            with({:conditions=>["LOWER(match.name) LIKE ?", "foo%"], :select=>"match.id, match.name", :order=>"id DESC", :limit=>10}).
+            and_return(@items)
+        @matches = helper.options_for_multiselect_match(:matches, :name, "foo", :order => 'id DESC')
+      end
+
+    end
+
+    describe "options_for_multiselect_selected" do
+      it "should find items with ids in a string" do
+        Matches.should_receive(:all).
+            with({:conditions=>["match.id in (?)", %w(1 2 3)], :select=>"match.id, match.name", :order=>"match.name ASC", :limit=>10}).
+            and_return(@items)
+        @matches = helper.options_for_multiselect_selected( :matches, :name, "1,2,3" )
+      end
+
+      it "should find items with ids in an array" do
+        Matches.should_receive(:all).
+            with({:conditions=>["match.id in (?)", %w(1 2 3)], :select=>"match.id, match.name", :order=>"match.name ASC", :limit=>10}).
+            and_return(@items)
+        @matches = helper.options_for_multiselect_selected( :matches, :name, %w(1 2 3) )
+      end
+
     end
 
     after(:all) do
-      save_fixture(@control, 'multiselect_tag')
+      save_fixture(@control, 'multiselect')
     end
 
   end
 
-  describe "autocomplete_multiselect_tag" do
+  describe "autocomplete_multiselect" do
 
-    it_should_behave_like 'multiselect'
+    it_should_behave_like 'multiselect_core'
 
     before(:each) do
-      @control = helper.autocomplete_multiselect_tag('field_name', '', 'some/path')
+      @control = helper.autocomplete_multiselect(:matches, :name, "foo", %w(1 2 3), 'some/path')
     end
 
     it "should have an autocomplete text field tag" do
@@ -51,8 +85,8 @@ describe ActionView::Helpers::FormTagHelper, :type => :helper do
     end
 
     after(:all) do
-      save_fixture(@control, 'autocomplete_multiselect_tag')
+      save_fixture(@control, 'autocomplete_multiselect')
     end
 
   end
-end 
+end
