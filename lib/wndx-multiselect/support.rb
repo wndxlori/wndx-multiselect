@@ -51,7 +51,13 @@ module WndxMultiselect
 
     def get_autocomplete_select_clause(model, method, options)
       table_name = model.table_name
-      (["#{table_name}.#{model.primary_key}", "#{table_name}.#{method}"] + (options[:extra_data].blank? ? [] : options[:extra_data]))
+      selects = []
+      selects << "#{table_name}.#{model.primary_key}"
+      selects << "#{table_name}.#{method}"
+      options[:extra_data].split(',').inject(selects) do |selects,extra|
+        selects << "#{table_name}.#{extra}"
+      end unless options[:extra_data].blank?
+      selects
     end
 
     def get_autocomplete_where_clause(model, term, method, options)
