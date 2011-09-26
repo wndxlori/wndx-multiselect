@@ -31,23 +31,26 @@ module ActionView
 
       # Finds items by id, creates option tag for each
       def options_for_multiselect_selected( object, method, ids, options = {} )
+        return [] if ( ids.nil? or ids.empty? )
         class_name = options[:class_name] || object
         model = get_object(class_name)
-        selected_ids = ids.is_a?(Array) ? ids : ids.split(',')
-        items = get_selected_items(:model => model, :options => options, :ids => selected_ids, :method => method)
+        items = get_selected_items(:model => model, :options => options, :ids => ids, :method => method)
         options_from_collection_for_select(items, :to_param, method)
       end
 
     private
 
       def get_selected_items(parameters)
-        model = parameters[:model]
         ids = parameters[:ids]
+        return [] if ( ids.nil? or ids.empty?)
+        selected_ids = ids.is_a?(Array) ? ids : ids.split(',')
+
+        model = parameters[:model]
         method = parameters[:method]
         options = parameters[:options]
 
         find_options = {
-          :conditions => get_selected_where_clause(model, ids, method, options),
+          :conditions => get_selected_where_clause(model, selected_ids, method, options),
           :order => get_autocomplete_order(method, options, model),
           :limit => get_autocomplete_limit(options)
         }

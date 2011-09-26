@@ -64,6 +64,13 @@ describe ActionView::Helpers::FormHelper, :type => :helper do
         @matches = helper.options_for_multiselect_selected( :matches, :name, %w(1 2 3) )
       end
 
+      it "should not fail, if no ids are provided" do
+        @matches = helper.options_for_multiselect_selected( :matches, :name, "" )
+        @matches.size.should == 0
+        @matches = helper.options_for_multiselect_selected( :matches, :name, [] )
+        @matches.size.should == 0
+      end
+
     end
 
     after(:all) do
