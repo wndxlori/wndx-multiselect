@@ -57,7 +57,7 @@ module WndxMultiselect
       options[:extra_data].split(',').inject(selects) do |selects,extra|
         selects << "#{table_name}.#{extra}"
       end unless options[:extra_data].blank?
-      selects.uniq!
+      selects.uniq
     end
 
     def get_autocomplete_where_clause(model, term, method, options)
