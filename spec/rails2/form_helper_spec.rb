@@ -84,7 +84,8 @@ describe ActionView::Helpers::FormHelper, :type => :helper do
     it_should_behave_like 'multiselect_core'
 
     before(:each) do
-      @control = helper.autocomplete_multiselect(:matches, :name, "foo", %w(1 2 3), 'some/path')
+      @matches = mock(:name => 'Foo')
+      @control = helper.autocomplete_multiselect(:matches, :name, 'some/path')
     end
 
     it "should have an autocomplete text field tag" do

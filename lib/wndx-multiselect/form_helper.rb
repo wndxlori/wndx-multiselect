@@ -38,6 +38,11 @@ module ActionView
         options_from_collection_for_select(items, :to_param, options[:display_value] ||= method)
       end
 
+      def autocomplete_field(object_name, method, source, options ={})
+        options["data-autocomplete"] = source
+        text_field(object_name, method, rewrite_autocomplete_option(options))
+      end
+
     private
 
       def get_selected_items(parameters)

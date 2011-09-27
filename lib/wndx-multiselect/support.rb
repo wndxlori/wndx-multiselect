@@ -39,11 +39,11 @@ module WndxMultiselect
       options = parameters[:options]
 
       find_options = {
-        :conditions => get_autocomplete_where_clause(model, term, method, options),
         :order => get_autocomplete_order(method, options, model),
         :limit => get_autocomplete_limit(options)
       }
 
+      find_options[:conditions] = get_autocomplete_where_clause(model, term, method, options) unless term.nil? or term.blank?
       find_options[:select] = get_autocomplete_select_clause(model, method, options).join(', ') unless options[:full_model]
 
       model.all(find_options)
@@ -62,8 +62,14 @@ module WndxMultiselect
 
     def get_autocomplete_where_clause(model, term, method, options)
       table_name = model.table_name
-      is_full_search = options[:full]
+      is_full_search = options[:full] || true
       ["LOWER(#{table_name}.#{method}) LIKE ?", "#{(is_full_search ? '%' : '')}#{term.downcase}%"]
+    end
+
+    def rewrite_autocomplete_option(options)
+      options["data-update-elements"] = JSON.generate(options.delete :update_elements) if options[:update_elements]
+      options["data-id-element"] = options.delete :id_element if options[:id_element]
+      options
     end
   end
 end

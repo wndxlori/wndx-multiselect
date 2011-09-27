@@ -14,6 +14,11 @@ module ActionView
         generate_multiselect_tag( name, match, nil, nil, source, options )
       end
     
+      def autocomplete_field_tag(name, value, source, options ={})
+        options["data-autocomplete"] = source
+        text_field_tag(name, value, rewrite_autocomplete_option(options))
+      end
+
     private
       def add_match_options( options = {} )
         options.merge( :multiple => true, :size => 6, :class => 'multiselectmatch')
