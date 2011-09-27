@@ -26,7 +26,7 @@ module ActionView
         class_name = options[:class_name] || object
         model = get_object(class_name)
         items = get_autocomplete_items(:model => model, :options => options, :term => match, :method => method)
-        options_from_collection_for_select(items, :to_param, method)
+        options_from_collection_for_select(items, :to_param, options[:display_value] ||= method)
       end
 
       # Finds items by id, creates option tag for each
@@ -35,7 +35,7 @@ module ActionView
         class_name = options[:class_name] || object
         model = get_object(class_name)
         items = get_selected_items(:model => model, :options => options, :ids => ids, :method => method)
-        options_from_collection_for_select(items, :to_param, method)
+        options_from_collection_for_select(items, :to_param, options[:display_value] ||= method)
       end
 
     private
@@ -50,7 +50,7 @@ module ActionView
         options = parameters[:options]
 
         find_options = {
-          :conditions => get_selected_where_clause(model, selected_ids, method, options),
+          :conditions => get_selected_where_clause(model, selected_ids),
           :order => get_autocomplete_order(method, options, model),
           :limit => get_autocomplete_limit(options)
         }
@@ -61,7 +61,7 @@ module ActionView
 
       end
 
-      def get_selected_where_clause(model, ids, method, options)
+      def get_selected_where_clause(model, ids)
         table_name = model.table_name
         ["#{table_name}.#{model.primary_key} IN (?)", ids]
       end
