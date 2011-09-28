@@ -5,8 +5,8 @@ class PlayersController < ApplicationController
   end
 
   def selected
-    @players = Player.find(params['player_ids'].first.split(','))
-    render :action => 'index'
+    #@players = Player.find(params['player_ids'].first.split(','))
+    #render :action => 'index'
   end
 
   # GET /players

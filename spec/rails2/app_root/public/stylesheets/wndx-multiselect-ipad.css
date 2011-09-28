@@ -1,0 +1,55 @@
+table.multiselectmatch {
+    overflow: scroll;
+}
+tbody{
+    display: block;
+    height: 10em;
+    overflow: auto;
+    border: 1px solid black;
+    min-width: 15em;
+}
+
+td {
+    height: 1em;
+    margin: 0; padding: 0;
+    width: 100%;
+}
+
+tr {
+    width: 100%;
+}
+
+tr.selected {
+    background-color: blue;
+    color: white;
+}
+
+.multiselectbuttons { width:2.5em; }
+.multiselectbuttons a {
+	width:40px; height:36px;
+}
+
+.multiselectbuttons a.add {
+	background: url("../images/wndx/32/shadow/navigate_right.png") center no-repeat;
+}
+.multiselectbuttons a.all[name=match2selected] {
+	background: url("../images/wndx/32/shadow/navigate_right2.png") center no-repeat;
+}
+.multiselectbuttons a.remove {
+	background: url("../images/wndx/32/shadow/navigate_left.png") center no-repeat;
+}
+.multiselectbuttons a.all[name=selected2match] {
+	background: url("../images/wndx/32/shadow/navigate_left2.png") center no-repeat;
+}
+.multiselectbuttons a.add:hover {
+	background: url("../images/wndx/32/plain/navigate_right.png") center no-repeat;
+}
+.multiselectbuttons a.all[name=match2selected]:hover {
+	background: url("../images/wndx/32/plain/navigate_right2.png") center no-repeat;
+}
+.multiselectbuttons a.remove:hover {
+	background: url("../images/wndx/32/plain/navigate_left.png") center no-repeat;
+}
+.multiselectbuttons a.all[name=selected2match]:hover {
+	background: url("../images/wndx/32/plain/navigate_left2.png") center no-repeat;
+}

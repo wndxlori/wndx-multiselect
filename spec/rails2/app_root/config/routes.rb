@@ -28,7 +28,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :teams, :collection => { :locate => :get, :select => :get, :selected => :get }
 
-  map.resources :players, :collection => { :select => :get, :autocomplete_team_name => :get, :autocomplete_player_given_name => :get }
+  map.resources :players, :collection => { :select => :get, :selected => :get, :autocomplete_team_name => :get, :autocomplete_player_given_name => :get }
 
   # Sample resource route within a namespace:
   #   map.namespace :admin do |admin|
