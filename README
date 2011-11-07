@@ -9,6 +9,12 @@ up a new gemset for this because it's targeting Rails 2.1 for backward compatibi
 After that is set up, you can go back up to the root directory and run "rake".  Or, from spec/rails2, you can run
 "bundle exec rake".
 
+
+Requirements
+============
+
+jQuery, jQuery UI Autocomplete, jQuery UI Highlight Effect
+
 Example
 =======
 

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Powerux JQuery Selectable List</title>
+  <%= stylesheet_link_tag 'wndx-multiselect.css' %>
+  <%= stylesheet_link_tag 'wndx-multiselect-ipad.css' %>
+  <%= javascript_include_tag 'jquery-1.6.4.js', 'jquery-ui-1.8.16.custom.js', 'jrails.js', 'wndx-multiselect-rails.js', 'application.js' %>
+</head>
+<body>
+	<nav>
+		<ul>
+			<li><%= link_to "Teams", teams_path %> </li>
+			<li><%= link_to "Players", players_path %> </li>
+			<li><%= link_to "Team Select", select_teams_path %> </li>
+			<li><%= link_to "Player Select", select_players_path %> </li>
+		</ul>
+	</nav>
+
+<%= yield %>
+
+</body>
+</html>

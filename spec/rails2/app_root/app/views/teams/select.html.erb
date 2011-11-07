@@ -1,0 +1,7 @@
+<p id="notice"><%= flash[:notice] %></p>
+<h2>Team Select</h2>
+
+<% form_tag '/teams/selected' do -%>
+    <%= multiselect_tag('my_teams', options_from_collection_for_select(@teams, :id, :name)) %>
+    <%= submit_tag "Select Teams" %>
+<% end -%>

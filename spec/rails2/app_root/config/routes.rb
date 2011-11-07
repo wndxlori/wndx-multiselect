@@ -24,6 +24,12 @@ ActionController::Routing::Routes.draw do |map|
   #     products.resources :sales, :collection => { :recent => :get }
   #   end
 
+  map.root :controller => 'teams'
+
+  map.resources :teams, :collection => { :locate => :get, :select => :get, :selected => :get }
+
+  map.resources :players, :collection => { :select => :get, :selected => :get, :autocomplete_team_name => :get, :autocomplete_player_given_name => :get }
+
   # Sample resource route within a namespace:
   #   map.namespace :admin do |admin|
   #     # Directs /admin/products/* to Admin::ProductsController (app/controllers/admin/products_controller.rb)

@@ -1,0 +1,105 @@
+<h1>Selected Players</h1>
+<form action="/players/selected" method="post">
+  <div style="margin:0;padding:0">
+    <input name="authenticity_token" type="hidden" value="9d35ef0011e16e80f0b33710181a48149d3ab83e" />
+  </div>
+  <div class="multiselect" data-multiselect="/players/autocomplete_player_given_name">
+    <input class="multiselecttext" data-multiselect="/players/autocomplete_player_given_name" id="match" name="match" placeholder="Enter match text" type="text" value="full_name" />
+    <table class="multiselectmatch" id="player_match">
+      <tbody>
+          <tr><td id="121">Mike Brown</td><tr>
+          <tr><td id="140">Mike Cammalleri</td><tr>
+          <tr><td id="146">Mike Card</td><tr>
+          <tr><td id="180">Mike Commodore</td><tr>
+          <tr><td id="181">Mike Comrie</td><tr>
+          <tr><td id="277">Mike Fisher</td><tr>
+          <tr><td id="324">Mike Glumac</td><tr>
+          <tr><td id="343">Mike Green</td><tr>
+          <tr><td id="350">Mike Grier</td><tr>
+          <tr><td id="424">Mike Iggulden</td><tr>
+          <tr><td id="447">Mike Johnson</td><tr>
+          <tr><td id="494">Mike Knuble</td><tr>
+          <tr><td id="587">Mike Lundin</td><tr>
+          <tr><td id="663">Mike Modano</td><tr>
+          <tr><td id="682">Mike Mottau</td><tr>
+          <tr><td id="834">Mike Rathje</td><tr>
+          <tr><td id="849">Mike Ribeiro</td><tr>
+          <tr><td id="850">Mike Ricci</td><tr>
+          <tr><td id="852">Mike Richards</td><tr>
+          <tr><td id="932">Mike Sillinger</td><tr>
+          <tr><td id="944">Mike Smith</td><tr>
+          <tr><td id="1088">Mike Weaver</td><tr>
+          <tr><td id="1089">Mike Weber</td><tr>
+      </tbody>
+    </table>
+    <div class="multiselectbuttons">
+      <a alt="Add" class="add" href="#" name="match2selected" onclick="; return false;"><span>Add</span></a><br />
+      <a alt="Add All" class="all" href="#" name="match2selected" onclick="; return false;"><span>Add All</span></a><br />
+      <a alt="Remove" class="remove" href="#" name="selected2match" onclick="; return false;"><span>Remove</span></a><br />
+      <a alt="Remove All" class="all" href="#" name="selected2match" onclick="; return false;"><span>Remove All</span></a>
+    </div>
+    <table class="multiselectselected" id="player_selected">
+      <tbody>
+      </tbody>
+    </table>
+    <input class="multiselectids" id="player_ids[]" name="player_ids[]" type="hidden" />
+  </div>
+
+    <input name="commit" type="submit" value="Select Players" />
+</form>
+
+<script type="text/javascript">
+$(document).ready(function(){
+    var moving = false;
+    $('tr').live( 'touchmove', function(e) { moving = true;});
+
+    $('tr').live( 'touchend', function(e){
+        if ( moving ) {
+            moving = false;
+            return;
+        }
+        e.preventDefault();
+        $(this).toggleClass('selected');
+    });
+    $('div.multiselectbuttons a').bind('touchend', function(evt) {
+//        if ($(this).hasClass('disabled') ) {
+//            evt.preventDefault();
+//        } else {
+            var arr = $(this).attr("name").split("2");
+            var from = arr[0];
+            var to = arr[1];
+            var holder = $(this).parent().parent();
+            var to_select = holder.find(".multiselect" + to);
+
+            // Chooses selected options or all options
+            var row_selector = ' tr.selected';
+            if ( $($(this)).hasClass('all')) {
+                row_selector = ' tr';
+            }
+
+            // Moves options from one list to the other list
+            holder.find(".multiselect" + from + row_selector).each(function(){
+                var new_row = $(this).clone();
+                to_select.append(new_row);
+                // Sort "to" list options after new option appended
+//                to_select.html(holder.find(".multiselect" + to + " tr").sort(function (a, b) {
+//                    return a.text == b.text ? 0 : a.text < b.text ? -1 : 1;
+//                }));
+                $(this).remove(); // TODO: reconsider using detach()
+                new_row.removeClass('selected');
+                new_row.effect("highlight", {}, 3000);
+            });
+
+//            this.resetLinks().saveSelected();
+//
+//            // to remove items not matching filter
+//            if (this.match_text != undefined) this.match_text.autocomplete("search");
+
+            // prevent default click actions
+            return false;
+//        }
+    });
+});
+</script>
+
+

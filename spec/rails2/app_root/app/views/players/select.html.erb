@@ -1,0 +1,7 @@
+<p id="notice"><%= flash[:notice] %></p>
+<h2>Player Select</h2>
+
+<% form_tag '/players/selected' do -%>
+    <%= autocomplete_multiselect_tag( :player, :full_name, '/players/autocomplete_player_given_name') %>
+    <%= submit_tag "Select Players" %>
+<% end -%>

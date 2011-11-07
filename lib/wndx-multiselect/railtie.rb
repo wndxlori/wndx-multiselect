@@ -7,10 +7,13 @@ module WndxMultiselect
         rescue LoadError
           puts 'PowerUX Multiselect requires the rails3-jquery-autocomplete gem'
         end
+        require 'wndx-multiselect/support'
+        require 'wndx-multiselect/form_tag_helper'
         require 'wndx-multiselect/form_helper'
-#        ActionView::Helpers.send(:include, WndxMultiselect::FormHelper ) 
+#        ActionView::Helpers.send(:include, WndxMultiselect::FormHelper )
 #        ActionView::Helpers.send(:include, WndxMultiselect::FormTagHelper ) 
-#        include WndxMultiselect::FormHelper
+        include WndxMultiselect::Support
+        include WndxMultiselect::FormHelper
         include WndxMultiselect::FormTagHelper
       end
     end
