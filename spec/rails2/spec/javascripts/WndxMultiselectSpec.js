@@ -6,6 +6,7 @@ describe("WNDX.Multiselect", function() {
         loadFixtures('multiselect_tag.html');
         multiSelect = new WNDX.Multiselect($('div.multiselect'));
         multiSelect.initialize();
+        multiSelect.resetLinks();
     });
 
     it("should initialize itself", function() {
@@ -23,6 +24,7 @@ describe("WNDX.Multiselect", function() {
         // select first option
         $('#field_name_match option:first').attr('selected', true);
         // click on add button
+        multiSelect.resetLinks();
         $('a.add').click();
         // check for option in selected with val matching original
         expect($('#field_name_selected option:first').val()).toEqual(opt_val);
@@ -34,6 +36,7 @@ describe("WNDX.Multiselect", function() {
         // select first option
         $('#field_name_match option:first').attr('selected', true);
         // click on add button
+        multiSelect.resetLinks();
         $('a.add').click();
         // check for no option in matched with val matching original
         $('#field_name_match option').each( function(){
@@ -58,6 +61,7 @@ describe("WNDX.Multiselect", function() {
         // select first option
         $('#field_name_selected option:first').attr('selected', true);
         // click on add button
+        multiSelect.resetLinks();
         $('a.remove').click();
         // check for option in selected with val matching original
         expect($('#field_name_match option:first').val()).toEqual(opt_val);
@@ -80,6 +84,7 @@ describe("WNDX.Multiselect", function() {
         // select first option
         $('#field_name_match option:first').attr('selected', true);
         // click on add button
+        multiSelect.resetLinks();
         $('a.add').click();
         // Checks value of hidden ids
         expect($('input[type=hidden]').val()).toEqual(opt_val);
