@@ -28,21 +28,21 @@ describe ActionView::Helpers::FormHelper, :type => :helper do
 
       it "should find all items if no match text provided" do
         Matches.should_receive(:all).
-            with({:conditions=>["LOWER(match.name) LIKE ?", "%"], :select=>"match.id, match.name", :order=>"match.name ASC", :limit=>10}).
+            with({:select=>"match.id, match.name", :order=>"match.name ASC", :limit=>50}).
             and_return(@items)
         @matches = helper.options_for_multiselect_match(:matches, :name)
       end
 
       it "should find the limit specified number of items" do
         Matches.should_receive(:all).
-            with({:conditions=>["LOWER(match.name) LIKE ?", "foo%"], :select=>"match.id, match.name", :order=>"match.name ASC", :limit=>20}).
+            with({:conditions=>["LOWER(match.name) LIKE ?", "%foo%"], :select=>"match.id, match.name", :order=>"match.name ASC", :limit=>20}).
             and_return(@items)
         @matches = helper.options_for_multiselect_match(:matches, :name, "foo", :limit => 20)
       end
 
       it "should find items in the order specified" do
         Matches.should_receive(:all).
-            with({:conditions=>["LOWER(match.name) LIKE ?", "foo%"], :select=>"match.id, match.name", :order=>"id DESC", :limit=>10}).
+            with({:conditions=>["LOWER(match.name) LIKE ?", "%foo%"], :select=>"match.id, match.name", :order=>"id DESC", :limit=>50}).
             and_return(@items)
         @matches = helper.options_for_multiselect_match(:matches, :name, "foo", :order => 'id DESC')
       end
@@ -52,14 +52,14 @@ describe ActionView::Helpers::FormHelper, :type => :helper do
     describe "options_for_multiselect_selected" do
       it "should find items with ids in a string" do
         Matches.should_receive(:all).
-            with({:conditions=>["match.id in (?)", %w(1 2 3)], :select=>"match.id, match.name", :order=>"match.name ASC", :limit=>10}).
+            with({:conditions=>["match.id IN (?)", %w(1 2 3)], :select=>"match.id, match.name", :order=>"match.name ASC", :limit=>50}).
             and_return(@items)
         @matches = helper.options_for_multiselect_selected( :matches, :name, "1,2,3" )
       end
 
       it "should find items with ids in an array" do
         Matches.should_receive(:all).
-            with({:conditions=>["match.id in (?)", %w(1 2 3)], :select=>"match.id, match.name", :order=>"match.name ASC", :limit=>10}).
+            with({:conditions=>["match.id IN (?)", %w(1 2 3)], :select=>"match.id, match.name", :order=>"match.name ASC", :limit=>50}).
             and_return(@items)
         @matches = helper.options_for_multiselect_selected( :matches, :name, %w(1 2 3) )
       end
@@ -84,7 +84,8 @@ describe ActionView::Helpers::FormHelper, :type => :helper do
     it_should_behave_like 'multiselect_core'
 
     before(:each) do
-      @matches = mock(:name => 'Foo')
+      @matches = mock(:name => 'Foo', :selected_ids => [] )
+      assigns[:matches] = @matches
       @control = helper.autocomplete_multiselect(:matches, :name, 'some/path')
     end
 
