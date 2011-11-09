@@ -1,4 +1,4 @@
-require 'lib/wndx-multiselect/version'
+require './lib/wndx-multiselect/version'
 Gem::Specification.new do |s|
   s.name = 'wndx-multiselect'
   s.version = WndxMultiselect::VERSION
