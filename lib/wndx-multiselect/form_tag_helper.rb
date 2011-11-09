@@ -20,12 +20,32 @@ module ActionView
       end
 
     private
+
       def add_match_options( options = {} )
-        options.merge( :multiple => true, :size => 6, :class => 'multiselectmatch')
+        options = options.merge( :multiple => true, :size => 7, :class => 'multiselectmatch').except(:style)
+        options[:id] = options[:id].to_s + '_match' if options[:id]
+        options
       end
+
       def add_selected_options( options = {} )
-        options.merge( :multiple => true, :size => 6, :class => 'multiselectselected')
+        options = options.merge( :multiple => true, :size => 7, :class => 'multiselectselected').except(:style)
+        options[:id] = options[:id].to_s + '_selected' if options[:id]
+        options
       end
+
+      def add_text_options( options = {} )
+        options = options.merge(:class => 'multiselecttext', :placeholder => 'Enter match text').except(:style)
+        options[:id] = options[:id].to_s + '_text' if options[:id]
+        options
+      end
+
+      def add_hidden_options( options = {} )
+        options = options.merge( :class => 'multiselectids' ).except(:style)
+        options[:id] = options[:id].to_s + '_hidden' if options[:id]
+        options[:value]="" if options[:empty]
+        options
+      end
+
       #
       # Method used to rename the multiselect key to a more standard
       # data-multiselect key
@@ -40,6 +60,8 @@ module ActionView
         updated_options = rename_multiselect_option(options)
         select_match_options = add_match_options(updated_options)
         select_selected_options = add_selected_options(updated_options)
+        text_options = add_text_options(updated_options)
+        hidden_options = add_hidden_options(updated_options)
 
         button_tags = []
         button_tags << link_to_function( content_tag(:span, 'Add'), {}, :name => 'match2selected', :class => 'add', :alt => 'Add')
@@ -50,11 +72,11 @@ module ActionView
 #        buttons = content_tag( :div, raw(button_tags.join(tag(:br))), :class => 'multiselectbuttons')
 
         select_tags = []
-        select_tags << text_field_tag( 'match', match, options.merge(:class => 'multiselecttext', :placeholder => 'Enter match text')) unless source.nil?
+        select_tags << text_field_tag( 'match', match, text_options) unless source.nil?
         select_tags << select_tag( name.to_s + "_match", matches, select_match_options)
         select_tags << buttons
         select_tags << select_tag( name.to_s + "_selected", selects, select_selected_options)
-        select_tags << hidden_field_tag( "#{name.to_s}_ids[]", nil, :class => 'multiselectids' )
+        select_tags << hidden_field_tag( "#{name.to_s}_ids[]", nil, hidden_options )
 
         content_tag(:div, select_tags.join, updated_options.merge(:class => 'multiselect'))
 #        content_tag(:div, raw(selects.join), updated_options.merge(:class => 'multiselect'))

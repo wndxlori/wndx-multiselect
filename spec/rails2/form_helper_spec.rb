@@ -1,4 +1,5 @@
 require 'spec_helper'
+require "multiselect_core_shared"
 
 describe ActionView::Helpers::FormHelper, :type => :helper do
 
@@ -17,12 +18,11 @@ describe ActionView::Helpers::FormHelper, :type => :helper do
 
   describe "multiselect" do
 
-    it_should_behave_like 'multiselect_core'
-
     before(:each) do
       @control = helper.multiselect(:matches, :name, [])
     end
 
+    it_should_behave_like 'multiselect_core'
 
     describe "options_for_multiselect_match" do
 
@@ -50,6 +50,7 @@ describe ActionView::Helpers::FormHelper, :type => :helper do
     end
 
     describe "options_for_multiselect_selected" do
+
       it "should find items with ids in a string" do
         Matches.should_receive(:all).
             with({:conditions=>["match.id IN (?)", %w(1 2 3)], :select=>"match.id, match.name", :order=>"match.name ASC", :limit=>50}).
@@ -79,15 +80,24 @@ describe ActionView::Helpers::FormHelper, :type => :helper do
 
   end
 
-  describe "autocomplete_multiselect" do
+  describe "multiselect with :empty option" do
 
-    it_should_behave_like 'multiselect_core'
+    it "should not query the list of matches" do
+      Matches.should_not_receive(:all)
+      @control = helper.multiselect(:matches, :name, [], :empty => true)
+    end
+
+  end
+
+  describe "autocomplete_multiselect" do
 
     before(:each) do
       @matches = mock(:name => 'Foo', :selected_ids => [] )
       assigns[:matches] = @matches
       @control = helper.autocomplete_multiselect(:matches, :name, 'some/path')
     end
+
+    it_should_behave_like 'multiselect_core'
 
     it "should have an autocomplete text field tag" do
       @control.should have_tag("input.multiselecttext[type=text]")
@@ -98,4 +108,76 @@ describe ActionView::Helpers::FormHelper, :type => :helper do
     end
 
   end
+
+  describe "autocomplete_multiselect with :empty option" do
+
+    def create
+      @control = helper.autocomplete_multiselect(:matches, :name, 'some/path', :empty => true)
+    end
+
+    before(:each) do
+      @matches = mock(:name => 'Foo', :selected_ids => [1,2,3] )
+      assigns[:matches] = @matches
+    end
+
+    it "should not query the search value" do
+      @matches.should_not_receive(:name)
+      create
+    end
+
+    it "should not query the list of matches" do
+      Matches.should_not_receive(:all)
+      create
+    end
+
+    it "should not query the list of ids" do
+      @matches.should_not_receive(:selected_ids)
+      create
+    end
+
+  end
+
+  describe "autocomplete_multiselect with style option" do
+
+    before(:each) do
+      @matches = mock(:name => 'Foo', :selected_ids => [1,2,3] )
+      assigns[:matches] = @matches
+      @control = helper.autocomplete_multiselect(:matches, :name, 'some/path', :style=>'foo=bar')
+    end
+
+    it "the outer div should have the style" do
+      @control.should have_tag('div.multiselect[style="foo=bar"]')
+    end
+
+    it "the inner elements should not have the style" do
+      @control.should_not have_tag('select.multiselectmatch[style="foo=bar"]')
+      @control.should_not have_tag('select.multiselectselected[style="foo=bar"]')
+      @control.should_not have_tag('input.multiselecttext[style="foo=bar"]')
+      @control.should_not have_tag('input.multiselectids[style="foo=bar"]')
+      @control.should_not have_tag('a[style="foo=bar"]')
+    end
+
+  end
+
+  describe "autocomplete_multiselect with custom id" do
+
+    before(:each) do
+      @matches = mock(:name => 'Foo', :selected_ids => [1,2,3] )
+      assigns[:matches] = @matches
+      @control = helper.autocomplete_multiselect(:matches, :name, 'some/path', :id=>'foo')
+    end
+
+    it "the outer div should have the id" do
+      @control.should have_tag('div#foo')
+    end
+
+    it "the inner elements should have derived ids" do
+      @control.should have_tag('select.multiselectmatch#foo_match')
+      @control.should have_tag('select.multiselectselected#foo_selected')
+      @control.should have_tag('input.multiselecttext#foo_text')
+      @control.should have_tag('input.multiselectids#foo_hidden')
+    end
+
+  end
+
 end
