@@ -187,7 +187,8 @@
             match_select.
                 append($("<option></option>").
                 attr("value",item.id).
-                text(item.value));
+                text(item.value).
+                attr("title",item.value));
         });
 
         // Ensures previously selected items don't appear in the match list
